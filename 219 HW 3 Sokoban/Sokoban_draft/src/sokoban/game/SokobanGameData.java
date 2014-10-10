@@ -103,6 +103,4 @@ public class SokobanGameData {
         return true;
     }
 
-
-
 }
