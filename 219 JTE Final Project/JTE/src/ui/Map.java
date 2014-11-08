@@ -6,27 +6,23 @@
 package ui;
 
 
+import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 /**
  *
- * @author Antony Kwok
- */
-public class Map extends Canvas{   //use grid[][], get coordinates, and path transaction
+ * @author Antony Kwok   
+ */                             //use grid[][], get coordinates,  and path transaction
+public class Map extends Canvas{   
+
     int cellWidth;
     int cellHeight;
-    City city;
+    ArrayList<City> cities = new ArrayList<City>();
     int height;
     int width;
     int gridColumns;
@@ -35,14 +31,30 @@ public class Map extends Canvas{   //use grid[][], get coordinates, and path tra
     GraphicsContext gc;
     
             // images
-        Image wallImage = new Image("file:images/");
-        Image boxImage = new Image("file:images/g");
-        Image placeImage = new Image("file:images/");
-        Image sokobanImage = new Image("file:images/");
+        Image map1Image = new Image("file:images/gameplay_AC14.jpg");
+        Image map2Image = new Image("file:images/gameplay_AC58.jpg");
+        Image map3Image = new Image("file:images/gameplay_DF14.jpg");
+        Image map4Image = new Image("file:images/gameplay_DF58.jpg");
+        Image view = new Image("file:images/die_1.jpg");
     
-    Map(int[][] x){
-            this.setWidth(400);
-            this.setHeight(2000);
+    Map(int[][] x, int type){
+            this.setWidth(1000);
+            this.setHeight(650);
+            gc = this.getGraphicsContext2D();
+           if(type == 1) 
+           {gc.drawImage(map1Image, 0, 0, 1000, 600);
+           gc.drawImage(view,  1093*1000/1000, 1932*600/2000);
+            cities.add(new City("ABERDEEN", 1093*1000/2000, 1093*1000/2000));
+            cities.get(0).setTooltip(new Tooltip());
+Circle circle = new Circle(cities.get(0).getWidth() / 2);
+cities.get(0).setShape(circle);
+           }
+           if(type == 2)
+               gc.drawImage(map2Image, 0, 0, 1000, 600);
+           if(type == 3)
+               gc.drawImage(map3Image, 0, 0, 1000, 600);
+           if(type ==4)
+               gc.drawImage(map4Image, 0, 0, 1000, 600);
             gridColumns = 200;
             gridRows = 40;
              grid = x;

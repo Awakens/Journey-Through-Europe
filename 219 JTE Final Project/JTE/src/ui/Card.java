@@ -6,13 +6,14 @@
 package ui;
 
 import java.awt.Image;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
 /**
  *
  * @author Antony Kwok
  */
-public class Card {
+public class Card extends Button{
     String color;
     String special;
     Image image;

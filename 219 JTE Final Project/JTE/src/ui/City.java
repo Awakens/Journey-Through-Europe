@@ -6,12 +6,13 @@
 package ui;
 
 import java.util.ArrayList;
+import javafx.scene.control.Button;
 
 /**
  *
  * @author Antony Kwok
  */
-public class City {
+public class City extends Button{
     String name;
     ArrayList<City> neighbors;
     double x;
@@ -24,7 +25,14 @@ public class City {
     boolean isAirport;
     int region;
     boolean isSpecialCity;
+    
 
+    public City(String name, int x, int y)
+    { this.name = name;
+     this.x = x; this.y = y;}
+    
+   
+    
     public void setName(String name) {
         this.name = name;
     }

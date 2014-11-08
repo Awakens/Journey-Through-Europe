@@ -24,8 +24,18 @@ public class JTEDataManager {
     ObjectInputStream input;
     JTEUI ui;
     
-    public JTEDataManager(JTEUI ui){this.ui = ui;}
+    public JTEDataManager(JTEUI ui)
+    {this.ui = ui;
+        maps = new ArrayList<Map>();
+       players = new ArrayList<Player>();}
+    
     public void save(Map m){}
     public void save (Player p){}
-    public void load(){}
+    public boolean hasSave()
+    { if(players.size() != 0) 
+        return true; 
+    else 
+        return false;}
+    public ArrayList<Player> loadPlayers(){return players;}
+    public ArrayList<Map> loadMaps(){return maps;}
 }

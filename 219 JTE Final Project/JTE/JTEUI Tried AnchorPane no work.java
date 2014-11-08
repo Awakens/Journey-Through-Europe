@@ -7,7 +7,6 @@ package ui;
 
 import game.JTEDataManager;
 import java.io.IOException;
-import static java.lang.Math.random;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.geometry.Insets;
@@ -29,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 
 /**
@@ -49,7 +49,7 @@ public class JTEUI extends Pane{
    BorderPane mainPane;
    StackPane splashPane;
    BorderPane aboutPanel;
-   Pane gamePanel;
+   AnchorPane gamePanel;
    VBox gamePanelRight, gamePanelLeft;
    StackPane cardStack;
    BorderPane historyPanel;
@@ -134,7 +134,7 @@ public class JTEUI extends Pane{
         // INIT THE SPLASH SCREEN CONTROLS
         splashView = new ImageView("file:images/Game.JPG");
         splashView.setFitWidth(1000.0);
-        splashView.setFitHeight(600.0);
+        splashView.setFitHeight(500.0);
 
         Label splashScreenImageLabel = new Label();
         splashScreenImageLabel.setGraphic(splashView);
@@ -265,24 +265,21 @@ public class JTEUI extends Pane{
          splashPane = new StackPane();
         aboutPanel = new BorderPane();
         aboutPanel.setCenter(aboutLabel);
-          gamePanel = new Pane();
-          gamePanel.setPrefWidth(1000);
-          gamePanel.setPrefHeight(600);
-           gamePanel.setStyle("-fx-background-color: red;");
-        //  gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14.jpg" + "'); -fx-background-repeat: stretch;");
+          gamePanel = new AnchorPane();
+          gamePanel.setMaxSize(1000, 300);
+          Image wallImage = new Image("file:images/gameplay_AC14.jpg");
+       // gamePanel.setGraphic(new ImageView("file:images/gameplay_AC14.jpg"));
+          gamePanel.setStyle("-fx-background-color: red;");
+          gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14.jpg" + "'); -fx-background-repeat: stretch;");
         // gamePanel.getChildren().add(map1);
-         
+        // gamePanel.getChildren().add(new Button("0"));
           gamePanel.getChildren().add(cities.get(0));  //add in City button
-          gamePanel.getChildren().add(cities.get(1));
            cities.get(0).setTooltip(new Tooltip("ABERDEEN"));   
-       // cities.get(0).relocate(5, 5);
-           cities.get(0).relocate(1993*1000/2010, 1932*800/2569);
-            cities.get(1).relocate(1985*1000/2010, 2124*800/2569);
+        
+            cities.get(0).relocate(1093*gamePanel.getWidth()/2010, 1932*gamePanel.getHeight()/2569);
                //gamePanel.setAlignment(cities.get(0), Pos.TOP_LEFT);
           //  cities.get(0).setTranslateX(500);
            cities.get(0).setGraphic(new ImageView("file:images/flag_white.png"));
-            cities.get(1).setGraphic(new ImageView("file:images/flag_black.png"));
-           
           historyPanel = new BorderPane();
           flightPanel = new BorderPane();
              mapPanel = new GridPane();
@@ -466,7 +463,7 @@ public class JTEUI extends Pane{
    public void initValues(){
        cities = new ArrayList<City>();
         cities.add(new City("ABERDEEN", 1093*1000/2000, 1932*600/1000));       
-         cities.add(new City("ARHUS", 1093*1000/2000, 1932*600/1000));
+         
 Circle circle = new Circle(cities.get(0).getWidth() / 2);
 cities.get(0).setShape(circle);
         paneWidth = 1000;
