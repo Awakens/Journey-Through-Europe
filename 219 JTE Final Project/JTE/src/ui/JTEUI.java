@@ -7,7 +7,6 @@ package ui;
 
 import game.JTEDataManager;
 import java.io.IOException;
-import static java.lang.Math.random;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.geometry.Insets;
@@ -29,6 +28,8 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
@@ -49,7 +50,7 @@ public class JTEUI extends Pane{
    BorderPane mainPane;
    StackPane splashPane;
    BorderPane aboutPanel;
-   Pane gamePanel;
+   AnchorPane gamePanel;
    VBox gamePanelRight, gamePanelLeft;
    StackPane cardStack;
    BorderPane historyPanel;
@@ -74,6 +75,7 @@ public class JTEUI extends Pane{
    Button aboutButton;
    Button quitButton;
    Button historyButton;
+   Button splashButton;
    Button gameButton;
    Label winLabel;
    Label loseLabel;
@@ -92,7 +94,11 @@ public class JTEUI extends Pane{
    Button dieButton;
    Button returnButton;
    ArrayList<Player> players;
-   ArrayList<City> cities;
+   FileLoader file;
+   ArrayList<City> cities1;
+   ArrayList<City> cities2;
+   ArrayList<City> cities3;
+   ArrayList<City> cities4;
    HashMap<String, City>  citiesHash;
    Insets marginlessInsets;
    ArrayList<BorderPane> playerPanels; 
@@ -124,8 +130,7 @@ public class JTEUI extends Pane{
         mainPane.setPadding(marginlessInsets);
         initValues();
         initLabels();
-          initButtons();
-          initMaps();
+          initButtons();     
         initPanels();
         initSplashScreen(); }
     
@@ -133,8 +138,8 @@ public class JTEUI extends Pane{
 
         // INIT THE SPLASH SCREEN CONTROLS
         splashView = new ImageView("file:images/Game.JPG");
-        splashView.setFitWidth(1000.0);
-        splashView.setFitHeight(600.0);
+        splashView.setFitWidth(1300.0);
+        splashView.setFitHeight(700.0);
 
         Label splashScreenImageLabel = new Label();
         splashScreenImageLabel.setGraphic(splashView);
@@ -142,7 +147,7 @@ public class JTEUI extends Pane{
 
         // GET THE LIST OF LEVEL OPTIONS
         splashButtonBox = new VBox();
-        splashButtonBox.setAlignment(Pos.CENTER);
+        splashButtonBox.setAlignment(Pos.BOTTOM_CENTER);
    
         // add key listener
         
@@ -157,6 +162,7 @@ public class JTEUI extends Pane{
                 mainPane.getChildren().clear();
                 mainPane.setTop(northToolbar);
                mainPane.setCenter(aboutPanel); 
+               mainPane.setBottom(splashButton);
                 });
             
         
@@ -169,12 +175,12 @@ public class JTEUI extends Pane{
         initLabels();
           initButtons();
         initPanels();
-        initMaps();
        mainPane.getChildren().clear();
        HBox plays = new HBox();
        plays.getChildren().addAll(selectNumPlayers, num2P, num3P, num4P, num5P, num6P, GO);    
        mainPane.setTop(plays);
        mainPane.setCenter(selectPlayersPanel); 
+       mainPane.setBottom(splashButton);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
         ColumnConstraints col2 = new ColumnConstraints();
@@ -265,23 +271,32 @@ public class JTEUI extends Pane{
          splashPane = new StackPane();
         aboutPanel = new BorderPane();
         aboutPanel.setCenter(aboutLabel);
-          gamePanel = new Pane();
-          gamePanel.setPrefWidth(1000);
+          gamePanel = new AnchorPane();
+          
+          gamePanel.setPrefWidth(800);
           gamePanel.setPrefHeight(600);
            gamePanel.setStyle("-fx-background-color: red;");
-        //  gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14.jpg" + "'); -fx-background-repeat: stretch;");
+         //  gamePanel.setBackground();
+          gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
         // gamePanel.getChildren().add(map1);
-         
-          gamePanel.getChildren().add(cities.get(0));  //add in City button
-          gamePanel.getChildren().add(cities.get(1));
-           cities.get(0).setTooltip(new Tooltip("ABERDEEN"));   
-       // cities.get(0).relocate(5, 5);
-           cities.get(0).relocate(1993*1000/2010, 1932*800/2569);
-            cities.get(1).relocate(1985*1000/2010, 2124*800/2569);
-               //gamePanel.setAlignment(cities.get(0), Pos.TOP_LEFT);
-          //  cities.get(0).setTranslateX(500);
-           cities.get(0).setGraphic(new ImageView("file:images/flag_white.png"));
-            cities.get(1).setGraphic(new ImageView("file:images/flag_black.png"));
+           gamePanel.setMaxSize(800, 600);
+        // gamePanel.setTopAnchor(cities1.get(0), 200.0);
+         // gamePanel.getChildren().add(cities1.get(0));  //add in City button
+           for(int i = 0; i < cities1.size(); i++)
+           { City NY = cities1.get(i);
+               gamePanel.getChildren().add(NY);
+            NY.relocate(NY.getX()*800/2010-10, NY.getY()*600/2569-10);
+                Circle circle = new Circle(3, Color.GREEN);
+            NY.setShape(circle);
+            NY.setPrefSize(1,1);
+            NY.setStyle("-fx-background-color: Transparent; -fx-cursor:crosshair;");
+           }
+           
+           
+          //    gamePanel.setAlignment(cities1.get(0), Pos.TOP_RIGHT);
+          //  cities1.get(0).setTranslateX(500);
+           //cities1.get(0).setGraphic(new ImageView("file:images/flag_white.png"));
+          //  cities1.get(1).setGraphic(new ImageView("file:images/flag_black.png"));
            
           historyPanel = new BorderPane();
           flightPanel = new BorderPane();
@@ -294,12 +309,18 @@ public class JTEUI extends Pane{
       mainPane.setLeft(gamePanelLeft);
       mainPane.setRight(gamePanelRight);
        mainPane.setCenter(gamePanel);
+       mainPane.setBottom(splashButton);
    }
    public void initButtons(){
        gameButton = new Button("Game");
        gameButton.setPrefSize(250, 50);
        gameButton.setOnAction(e -> {
         loadGamePanel();
+       });
+       splashButton = new Button("Splash");
+       splashButton.setOnAction(e ->{
+           mainPane.getChildren().clear();
+       initSplashScreen();
        });
        historyButton = new Button("History");
        historyButton.setPrefSize(250, 50);
@@ -320,6 +341,7 @@ public class JTEUI extends Pane{
              mainPane.getChildren().clear();
              mainPane.setTop(northToolbar);
              mainPane.setCenter(historyPanel);
+             mainPane.setBottom(splashButton);
    });
          selectUser0 = new Button("User"); 
          selectUser1 = new Button("User");
@@ -382,6 +404,7 @@ public class JTEUI extends Pane{
              mainPane.setTop(northToolbar);
              mainPane.setRight(gamePanelRight);
                 mainPane.setLeft(gamePanelLeft);
+                mainPane.setBottom(splashButton);
        } ); 
         
       
@@ -401,10 +424,11 @@ public class JTEUI extends Pane{
         });
         aboutButton = new Button("About");
         aboutButton.setPrefSize(250, 50);
-        aboutButton.setOnAction(e -> {
+        aboutButton.setOnAction(e -> {        
           mainPane.getChildren().clear();
           mainPane.setTop(northToolbar);
           mainPane.setCenter(aboutPanel);
+          mainPane.setBottom(splashButton);
         });
         aboutButton.setPrefSize(250, 50);
         quitButton = new Button("Quit");
@@ -464,13 +488,14 @@ public class JTEUI extends Pane{
    }
    
    public void initValues(){
-       cities = new ArrayList<City>();
-        cities.add(new City("ABERDEEN", 1093*1000/2000, 1932*600/1000));       
-         cities.add(new City("ARHUS", 1093*1000/2000, 1932*600/1000));
-Circle circle = new Circle(cities.get(0).getWidth() / 2);
-cities.get(0).setShape(circle);
-        paneWidth = 1000;
-        paneHeight = 500;
+       file = new FileLoader();
+       cities1 = file.getCities1();
+       cities2 = file.getCities2();
+       cities3 = file.getCities3();
+       cities4 = file.getCities4();
+       
+        paneWidth = 1300;
+        paneHeight = 700;
         playerNames = new ArrayList<TextField>();
         playerNames.add(new TextField("Player 1"));
         playerNames.add(new TextField("Player 2"));
@@ -487,14 +512,7 @@ cities.get(0).setShape(circle);
        playerType.add("Computer");
        playerType.add("Computer");
         }
-   public void initMaps(){
-     map1 = new Map(grid1, 1);
-     map1.setStyle("-fx-background-color:lightgray");
-     map2 = new Map(grid2, 2);
-     map3 = new Map(grid3, 3);
-     map4 = new Map(grid4, 4);
-     
-   }
+
    public void saveMap(){}
    public void savePlayers(){}
    public int throwDie(){
