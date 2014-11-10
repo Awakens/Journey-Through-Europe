@@ -159,11 +159,17 @@ public class JTEUI extends Pane{
             loadGameButton.setOnAction(e -> {
                load();});
             aboutButton.setOnAction(e -> {
-                mainPane.getChildren().clear();
-                mainPane.setTop(northToolbar);
-               mainPane.setCenter(aboutPanel); 
+                boolean xd = false;
+                if(mainPane.getCenter() == splashPane)
+                    xd = true;
+                mainPane.getChildren().clear();   
+                 mainPane.setCenter(aboutPanel);
+               if(xd)
                mainPane.setBottom(splashButton);
-                });
+                
+               else
+               mainPane.setTop(northToolbar);
+            } );
             
         
         splashPane.getChildren().add(splashButtonBox);
@@ -180,7 +186,6 @@ public class JTEUI extends Pane{
        plays.getChildren().addAll(selectNumPlayers, num2P, num3P, num4P, num5P, num6P, GO);    
        mainPane.setTop(plays);
        mainPane.setCenter(selectPlayersPanel); 
-       mainPane.setBottom(splashButton);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
         ColumnConstraints col2 = new ColumnConstraints();
@@ -211,7 +216,7 @@ public class JTEUI extends Pane{
        }
        //add in things to player panels
        for(int i =0; i < numPlayers; i++)
-       { 
+       { playerPanels.get(i).setStyle("-fx-background-color:gray; -fx-border-style: solid; -fx-border-width: 1px;");
         HBox box = new HBox();                    //add in things inside the Player Panel
         nameLabel = new Label("Name: ");
        box.getChildren().addAll(nameLabel, playerNames.get(i));   //label and textfield
@@ -291,7 +296,34 @@ public class JTEUI extends Pane{
             NY.setPrefSize(1,1);
             NY.setStyle("-fx-background-color: Transparent; -fx-cursor:crosshair;");
            }
-           
+       /*    for(int i = 0; i < cities2.size(); i++)
+           { City NY = cities2.get(i);
+               gamePanel.getChildren().add(NY);
+            NY.relocate(NY.getX()*800/2010-10, NY.getY()*600/2569-10);
+                Circle circle = new Circle(3, Color.GREEN);
+            NY.setShape(circle);
+            NY.setPrefSize(1,1);
+            NY.setStyle("-fx-background-color: Transparent; -fx-cursor:crosshair;");
+           }
+           for(int i = 0; i < cities3.size(); i++)
+           { City NY = cities3.get(i);
+               gamePanel.getChildren().add(NY);
+            NY.relocate(NY.getX()*800/2010-10, NY.getY()*600/2569-10);
+                Circle circle = new Circle(3, Color.GREEN);
+            NY.setShape(circle);
+            NY.setPrefSize(1,1);
+            NY.setStyle("-fx-background-color: Transparent; -fx-cursor:crosshair;");
+           }
+           for(int i = 0; i < cities4.size(); i++)
+           { City NY = cities4.get(i);
+               gamePanel.getChildren().add(NY);
+            NY.relocate(NY.getX()*800/2010-10, NY.getY()*600/2569-10);
+                Circle circle = new Circle(3, Color.GREEN);
+            NY.setShape(circle);
+            NY.setPrefSize(1,1);
+            NY.setStyle("-fx-background-color: Transparent; -fx-cursor:crosshair;");
+           }
+          */ 
            
           //    gamePanel.setAlignment(cities1.get(0), Pos.TOP_RIGHT);
           //  cities1.get(0).setTranslateX(500);
@@ -309,25 +341,31 @@ public class JTEUI extends Pane{
       mainPane.setLeft(gamePanelLeft);
       mainPane.setRight(gamePanelRight);
        mainPane.setCenter(gamePanel);
-       mainPane.setBottom(splashButton);
    }
    public void initButtons(){
        gameButton = new Button("Game");
        gameButton.setPrefSize(250, 50);
+        gameButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+       gameButton.setGraphic(new ImageView("file:images/arrow water GIF.gif"));    
        gameButton.setOnAction(e -> {
         loadGamePanel();
        });
        splashButton = new Button("Splash");
+       splashButton.setStyle("-fx-background-color: lightblue; -fx-cursor: pointer;");
+        splashButton.setMaxSize(250, 50);
        splashButton.setOnAction(e ->{
            mainPane.getChildren().clear();
        initSplashScreen();
        });
        historyButton = new Button("History");
        historyButton.setPrefSize(250, 50);
+       historyButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+        historyButton.setGraphic(new ImageView("file:images/115.png"));
        historyButton.setOnAction(e ->{
            String s = "";
            String p = "";
-         if(players.get(0) != null)
+         if(numPlayers != 0)
+         { if(players.get(0) != null)
          {  for(int i = 0; i < numPlayers; i++)
            {  s = s + "Player " + (i+1) + " history: \n";
              if(players.get(i) != null)
@@ -336,12 +374,11 @@ public class JTEUI extends Pane{
                 if(j % 5 == 0)
                     p = p + "\n";}}
             s = s + p + "\n";
-           }}  aboutLabel = new Label(s);
+           }}}  aboutLabel = new Label(s);
            historyPanel.setCenter(aboutLabel);
              mainPane.getChildren().clear();
              mainPane.setTop(northToolbar);
              mainPane.setCenter(historyPanel);
-             mainPane.setBottom(splashButton);
    });
          selectUser0 = new Button("User"); 
          selectUser1 = new Button("User");
@@ -393,9 +430,13 @@ public class JTEUI extends Pane{
            playerType.set(5, "Computer");
           });
                       
-       GO = new Button("GO!");
+       GO = new Button();
+       GO.setPrefSize(30, 30);
+        GO.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+       GO.setGraphic(new ImageView("file:images/images (1).jpg"));  
        GO.setOnAction(e -> {
-         for(int i = 0; i < numPlayers; i++)
+           if(numPlayers != 0)
+           { for(int i = 0; i < numPlayers; i++)
          { 
          
              players.add(new Player(playerNames.get(i), i, playerType.get(i)));
@@ -404,14 +445,17 @@ public class JTEUI extends Pane{
              mainPane.setTop(northToolbar);
              mainPane.setRight(gamePanelRight);
                 mainPane.setLeft(gamePanelLeft);
-                mainPane.setBottom(splashButton);
-       } ); 
+       } }); 
         
       
        OK = new Button("OK");
-       startGameButton = new Button("Start");
+       startGameButton = new Button();
+       startGameButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+       startGameButton.setGraphic(new ImageView("file:images/white-background-gold-button-md.png"));              
        startGameButton.setPrefSize(250, 50);
-        loadGameButton = new Button("Load");
+        loadGameButton = new Button();
+        loadGameButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+        loadGameButton.setGraphic(new ImageView("file:images/greenb.png"));
         loadGameButton.setPrefSize(250, 50);
         loadGameButton.setOnAction(e -> {
          if(dataManager.hasSave() == true)
@@ -422,26 +466,34 @@ public class JTEUI extends Pane{
           map4 = dataManager.loadMaps().get(3);
          }
         });
-        aboutButton = new Button("About");
+        aboutButton = new Button();
+        aboutButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+         aboutButton.setGraphic(new ImageView("file:images/500px-HILLBLU_button_background.svg.png"));
         aboutButton.setPrefSize(250, 50);
         aboutButton.setOnAction(e -> {        
           mainPane.getChildren().clear();
           mainPane.setTop(northToolbar);
           mainPane.setCenter(aboutPanel);
-          mainPane.setBottom(splashButton);
         });
         aboutButton.setPrefSize(250, 50);
-        quitButton = new Button("Quit");
+        quitButton = new Button();
+        quitButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
+        quitButton.setGraphic(new ImageView("file:images/redb.png"));
         quitButton.setPrefSize(250, 50);
         quitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {			
 				System.exit(0);	}});
     num2P = new Button("2");
+    num2P.setPrefSize(30, 30);
     num3P = new Button("3");
+    num3P.setPrefSize(30, 30);
     num4P = new Button("4");
+    num4P.setPrefSize(30, 30);
     num5P = new Button("5");
+    num5P.setPrefSize(30, 30);
     num6P = new Button("6");
+    num6P.setPrefSize(30, 30);
     num2P.setOnAction(e ->{
         numPlayers = 2;
           addPlayerPanels(2);   });
@@ -471,9 +523,9 @@ public class JTEUI extends Pane{
    dieButton = new Button();
        ImageView view = new ImageView("file:images/die_1.jpg");
         dieButton.setGraphic(view);
-       dieButton.setOnAction(e -> {
+       dieButton.setOnAction(e -> {   
         int points = throwDie();
-        //come check add in things for player turns 
+        //come check add in things for player turns ,use this ActionHandler to select new player turn ?? 
         //currentPlayer.setPoints(points);
        });
     returnButton = new Button();
@@ -519,17 +571,17 @@ public class JTEUI extends Pane{
        int xs = (int) Math.random() * 5 + 1;
     ImageView view = new ImageView("file:images/die_1.jpg");
     if(xs == 1)
-            new ImageView("file:images/die_1.jpg");
+            view = new ImageView("file:images/die_1.jpg");
     else if(xs == 2)
-            new ImageView("file:images/die_2.jpg");
+            view = new ImageView("file:images/die_2.jpg");
     else if(xs == 3)
-            new ImageView("file:images/die_3.jpg");
+            view = new ImageView("file:images/die_3.jpg");
     else if(xs == 4)
-            new ImageView("file:images/die_4.jpg");
+            view = new ImageView("file:images/die_4.jpg");
     else if(xs == 5)
-            new ImageView("file:images/die_5.jpg");
+            view = new ImageView("file:images/die_5.jpg");
     else
-            new ImageView("file:images/die_6.jpg");
+            view = new ImageView("file:images/die_6.jpg");
         dieButton.setGraphic(view);
         return xs;
    }

@@ -7,6 +7,8 @@ package ui;
 
 import java.util.ArrayList;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -25,13 +27,26 @@ public class City extends Button{
     boolean isAirport;
     int region;
     boolean isSpecialCity;
-    
 
-    public City(String name, int x, int y)
+    String color;
+
+    public City(String name, String color, int region, int x, int y)
     { this.name = name;
-     this.x = x; this.y = y;}
+      this.color = color;
+      this.region = region;
+     this.x = x; this.y = y;
+     Tooltip tip = new Tooltip(name);
+     setTooltip(tip); 
+    // tip.setGraphic(new ImageView("file:images/flag_white.png"));
+    }
     
-   
+    
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;}
     
     public void setName(String name) {
         this.name = name;

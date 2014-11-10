@@ -44,10 +44,10 @@ public class Map extends Canvas{
            if(type == 1) 
            {gc.drawImage(map1Image, 0, 0, 1000, 600);
            gc.drawImage(view,  1093*1000/1000, 1932*600/2000);
-            cities.add(new City("ABERDEEN", 1093*1000/2000, 1093*1000/2000));
-            cities.get(0).setTooltip(new Tooltip());
-Circle circle = new Circle(cities.get(0).getWidth() / 2);
-cities.get(0).setShape(circle);
+           // cities.add(new City("ABERDEEN", 1093*1000/2000, 1093*1000/2000));
+          //  cities.get(0).setTooltip(new Tooltip());
+//Circle circle = new Circle(cities.get(0).getWidth() / 2);
+//cities.get(0).setShape(circle);
            }
            if(type == 2)
                gc.drawImage(map2Image, 0, 0, 1000, 600);

@@ -24,7 +24,13 @@ public class Card extends Button{
     int number;
     int region;
     City city;
-
+    String name;
+    
+    Card(String name, String color)
+    {this.name = name;
+    this.color = color;
+   // this.special = special;
+    }
     public void setColor(String color) {
         this.color = color;
     }
