@@ -30,37 +30,33 @@ void loadFile() throws Exception {
 BufferedReader file = 
 new BufferedReader(new FileReader("cities.csv"));
 
-String readLine = file.readLine(); // Read first line.
-// The while checks to see if the data is null. If 
-// it is, we've hit the end of the file. If not, 
-// process the data.
-
-while (readLine != null){
-    
-String[] data = readLine.split(",");
+String readLine = file.readLine(); 
+while (readLine != null)
+{
+  String[] data = readLine.split(",");
 
     int region = Integer.parseInt(data[2]); //add in neighbors after
       System.out.println(data[0] + "  " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
     int x = Integer.parseInt(data[3]);
     int y = Integer.parseInt(data[4]);
-if(data[1].equals("green"))
+  if(data[1].equals("green"))
     greenCards.add(new Card(data[0], data[1]));
-if(data[1].equals("red"))
+  if(data[1].equals("red"))
     redCards.add(new Card(data[0], data[1]));
-if(data[1].equals("yellow"))
+  if(data[1].equals("yellow"))
     yellowCards.add(new Card(data[0], data[1]));
-if(region == 1)
+  if(region == 1)
     cities1.add(new City(data[0], data[1], region, x, y));
-if(region == 2)
+  if(region == 2)
     cities2.add(new City(data[0], data[1], region, x, y));
-if(region == 3)
+  if(region == 3)
     cities3.add(new City(data[0], data[1], region, x, y));
-if(region == 4)
+  if(region == 4)
     cities4.add(new City(data[0], data[1], region, x, y));
-
-readLine = file.readLine(); // Read next line of data.
+    //next line
+  readLine = file.readLine(); 
 }
-file.close();  //close file when done
+  file.close();  //done and close
 
 
 

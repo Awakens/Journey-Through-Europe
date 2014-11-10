@@ -8,7 +8,6 @@ package ui;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 
 /**
  *
@@ -38,6 +37,11 @@ public class City extends Button{
      Tooltip tip = new Tooltip(name);
      setTooltip(tip); 
     // tip.setGraphic(new ImageView("file:images/flag_white.png"));
+     setOnMouseClicked(e ->{
+         System.out.println("mouse coordinates (" + e.getX() + "," + e.getY() + ")");
+      System.out.println(name + "'s location is (" + x + "," + y + ")");
+     }
+     );
     }
     
     

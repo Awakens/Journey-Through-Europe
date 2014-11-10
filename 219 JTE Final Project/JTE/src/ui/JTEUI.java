@@ -50,7 +50,7 @@ public class JTEUI extends Pane{
    BorderPane mainPane;
    StackPane splashPane;
    BorderPane aboutPanel;
-   AnchorPane gamePanel;
+   BorderPane gamePanel;
    VBox gamePanelRight, gamePanelLeft;
    StackPane cardStack;
    BorderPane historyPanel;
@@ -186,6 +186,7 @@ public class JTEUI extends Pane{
        plays.getChildren().addAll(selectNumPlayers, num2P, num3P, num4P, num5P, num6P, GO);    
        mainPane.setTop(plays);
        mainPane.setCenter(selectPlayersPanel); 
+       mainPane.setStyle("-fx-background-image: url('" + "file:images/brown-vintage-background-18641-19113-hd-wallpapers.jpg" + "'); -fx-max-width: 1300; -fx-max-height: 700;");
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(50);
         ColumnConstraints col2 = new ColumnConstraints();
@@ -199,6 +200,9 @@ public class JTEUI extends Pane{
         row2.setPercentHeight(60);
         RowConstraints row3 = new RowConstraints();
         row3.setPercentHeight(60);
+        selectPlayersPanel.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+        selectPlayersPanel.setVgap(10);
+
         selectPlayersPanel.getRowConstraints().addAll(row1,row2,row3);
        selectPlayersPanel.add(playerPanels.get(0), 0,0);
        selectPlayersPanel.add(playerPanels.get(1), 1,0);
@@ -216,15 +220,17 @@ public class JTEUI extends Pane{
        }
        //add in things to player panels
        for(int i =0; i < numPlayers; i++)
-       { playerPanels.get(i).setStyle("-fx-background-color:gray; -fx-border-style: solid; -fx-border-width: 1px;");
+       { playerPanels.get(i).setStyle("-fx-background-color:brown; -fx-border-style: solid; -fx-border-width: 1px;");
         HBox box = new HBox();                    //add in things inside the Player Panel
-        nameLabel = new Label("Name: ");
+        nameLabel = new Label("  Name: ");
+        nameLabel.setPrefHeight(25);
+        nameLabel.setStyle("-fx-background-color:white;");
        box.getChildren().addAll(nameLabel, playerNames.get(i));   //label and textfield
        playerPanels.get(i).setLeft(box);
        HBox Mrbox = new HBox();
        if(i == 0)
        {playerPanels.get(i).setTop(new ImageView("file:images/flag_black.png"));
-       Mrbox.getChildren().addAll(selectUser0, selectComputer0);
+       Mrbox.getChildren().addAll(selectUser0, selectComputer0); 
        playerPanels.get(i).setCenter(Mrbox);}
        if(i == 1)
        {playerPanels.get(i).setTop(new ImageView("file:images/flag_blue.png"));
@@ -251,11 +257,15 @@ public class JTEUI extends Pane{
  
    
    public void initPanels(){
+       map1 = new Map(1);
+       map2 = new Map(2);
+       map3 = new Map(3);
+       map4 = new Map(4);
        gamePanelLeft = new VBox();
        cardStack = new StackPane();
        gamePanelLeft.getChildren().addAll(cardStack);
        gamePanelRight = new VBox();
-       gamePanelRight.getChildren().addAll(dieButton);
+       gamePanelRight.getChildren().addAll(dieButton, saveButton);
        selectPlayersPanel = new GridPane();   
        northToolbar = new HBox();
        northToolbar.setStyle("-fx-background-color:lightgray");
@@ -276,20 +286,21 @@ public class JTEUI extends Pane{
          splashPane = new StackPane();
         aboutPanel = new BorderPane();
         aboutPanel.setCenter(aboutLabel);
-          gamePanel = new AnchorPane();
+          gamePanel = new BorderPane();
           
           gamePanel.setPrefWidth(800);
           gamePanel.setPrefHeight(600);
            gamePanel.setStyle("-fx-background-color: red;");
-         //  gamePanel.setBackground();
-          gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+         // gamePanel.setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
         // gamePanel.getChildren().add(map1);
            gamePanel.setMaxSize(800, 600);
+        //   gamePanel.getChildren().addAll(map1, map2, map3, map4);
+           gamePanel.setCenter(map1);
         // gamePanel.setTopAnchor(cities1.get(0), 200.0);
          // gamePanel.getChildren().add(cities1.get(0));  //add in City button
            for(int i = 0; i < cities1.size(); i++)
            { City NY = cities1.get(i);
-               gamePanel.getChildren().add(NY);
+               map1.getChildren().add(NY);
             NY.relocate(NY.getX()*800/2010-10, NY.getY()*600/2569-10);
                 Circle circle = new Circle(3, Color.GREEN);
             NY.setShape(circle);
@@ -387,47 +398,77 @@ public class JTEUI extends Pane{
          selectUser4 = new Button("User");
          selectUser5 = new Button("User");
           selectComputer0 = new Button("Computer"); 
+          selectComputer0.setStyle("-fx-background-color: red;");
           selectComputer1 = new Button("Computer"); 
+          selectComputer1.setStyle("-fx-background-color: red;");
           selectComputer2 = new Button("Computer"); 
+          selectComputer2.setStyle("-fx-background-color: red;");
           selectComputer3 = new Button("Computer"); 
+          selectComputer3.setStyle("-fx-background-color: red;");
           selectComputer4 = new Button("Computer"); 
+          selectComputer4.setStyle("-fx-background-color: red;");
           selectComputer5 = new Button("Computer"); 
+          selectComputer5.setStyle("-fx-background-color: red;");
 
           selectUser0.setOnAction(e ->{
            playerType.set(0, "User");
+           selectUser0.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer0.setStyle("");
           });
           selectUser1.setOnAction(e ->{
            playerType.set(1, "User");
+           selectUser1.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer1.setStyle("");
           });
           selectUser2.setOnAction(e ->{
            playerType.set(2, "User");
+           selectUser2.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer2.setStyle("");
           });
           selectUser3.setOnAction(e ->{
            playerType.set(3, "User");
+           selectUser3.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer3.setStyle("");
           });        
           selectUser4.setOnAction(e ->{
            playerType.set(4, "User");
+           selectUser4.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer4.setStyle("");
           });
           selectUser5.setOnAction(e ->{
            playerType.set(5, "User");
+           selectUser5.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectComputer5.setStyle("");
           });
           selectComputer0.setOnAction(e ->{
            playerType.set(0, "Computer");
+           selectComputer0.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser0.setStyle("");
           });
           selectComputer1.setOnAction(e ->{
            playerType.set(1, "Computer");
+           selectComputer1.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser1.setStyle("");
           });
           selectComputer2.setOnAction(e ->{
            playerType.set(2, "Computer");
+           selectComputer2.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser2.setStyle("");
           });
           selectComputer3.setOnAction(e ->{
            playerType.set(3, "Computer");
+           selectComputer3.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser3.setStyle("");
           });
           selectComputer4.setOnAction(e ->{
            playerType.set(4, "Computer");
+           selectComputer4.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser4.setStyle("");
           });
           selectComputer5.setOnAction(e ->{
            playerType.set(5, "Computer");
+           selectComputer5.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+           selectUser5.setStyle("");
           });
                       
        GO = new Button();
@@ -435,6 +476,7 @@ public class JTEUI extends Pane{
         GO.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
        GO.setGraphic(new ImageView("file:images/images (1).jpg"));  
        GO.setOnAction(e -> {
+           mainPane.setStyle("");
            if(numPlayers != 0)
            { for(int i = 0; i < numPlayers; i++)
          { 
@@ -451,7 +493,7 @@ public class JTEUI extends Pane{
        OK = new Button("OK");
        startGameButton = new Button();
        startGameButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
-       startGameButton.setGraphic(new ImageView("file:images/white-background-gold-button-md.png"));              
+       startGameButton.setGraphic(new ImageView("file:images/Background - Light.png"));              
        startGameButton.setPrefSize(250, 50);
         loadGameButton = new Button();
         loadGameButton.setStyle("-fx-background-color: Transparent; -fx-cursor: pointer;");
@@ -495,25 +537,31 @@ public class JTEUI extends Pane{
     num6P = new Button("6");
     num6P.setPrefSize(30, 30);
     num2P.setOnAction(e ->{
-        numPlayers = 2;
+        numPlayers = 2;   num2P.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+        num3P.setStyle(""); num4P.setStyle(""); num5P.setStyle(""); num6P.setStyle("");
           addPlayerPanels(2);   });
     num3P.setOnAction(e ->{
-        numPlayers = 3;
+        numPlayers = 3; num3P.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+        num2P.setStyle(""); num4P.setStyle(""); num5P.setStyle(""); num6P.setStyle("");
           addPlayerPanels(3);   });
     num4P.setOnAction(e ->{
-        numPlayers = 4;
+        numPlayers = 4;  num4P.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+        num2P.setStyle(""); num3P.setStyle(""); num5P.setStyle(""); num6P.setStyle("");
           addPlayerPanels(4);   });
     num5P.setOnAction(e ->{
-        numPlayers = 5;
+        numPlayers = 5; num5P.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+        num2P.setStyle(""); num3P.setStyle(""); num4P.setStyle(""); num6P.setStyle("");
           addPlayerPanels(5);   });
     num6P.setOnAction(e ->{
-        numPlayers = 6;
+        numPlayers = 6; num6P.setStyle("-fx-background-color: red; -fx-cursor: pointer;");
+        num3P.setStyle(""); num4P.setStyle(""); num5P.setStyle(""); num2P.setStyle("");
           addPlayerPanels(6);   });
     mapB1 = new Button();
    mapB2 = new Button();
     mapB3 = new Button();
     mapB4 = new Button();
    saveButton = new Button();
+        saveButton.setGraphic(new ImageView("file:images/save-button-md.png"));
     closeButton = new Button();
     flightButton = new Button();
     map1Button = new Button();
@@ -532,8 +580,11 @@ public class JTEUI extends Pane{
    }
    
    public void initLabels(){
-    selectNumPlayers = new Label("Select Number of players");
-    nameLabel = new Label(  "Name: ");
+    selectNumPlayers = new Label("Select Number of players:  ");
+    selectNumPlayers.setPrefHeight(30);
+    selectNumPlayers.setStyle("-fx-background-color:white; ");
+    nameLabel = new Label("  Name:  ");
+    nameLabel.setPrefHeight(25);
      winLabel = new Label("You win!");
      loseLabel = new Label("You lose!");
     aboutLabel = new Label("Journey through Europe is a family board game published by Ravensburger. The board is a map of Europe with various major cities marked, for example, Athens, Amsterdam and London. \n The players are given a home city from which they will begin and are then dealt a number of cards with various other cities on them. \n They must plan a route between each of the cities in their hand of cards. On each turn they throw a die and move between the cities. \n The winner is the first player to visit each of their cities and then return to their home base.");
@@ -569,6 +620,7 @@ public class JTEUI extends Pane{
    public void savePlayers(){}
    public int throwDie(){
        int xs = (int) Math.random() * 5 + 1;
+       System.out.println("Die rolled "+ xs);
     ImageView view = new ImageView("file:images/die_1.jpg");
     if(xs == 1)
             view = new ImageView("file:images/die_1.jpg");

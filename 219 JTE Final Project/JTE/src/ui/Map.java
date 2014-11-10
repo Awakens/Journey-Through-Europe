@@ -6,59 +6,58 @@
 package ui;
 
 
+import static java.lang.System.gc;
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author Antony Kwok   
  */                             //use grid[][], get coordinates,  and path transaction
-public class Map extends Canvas{   
+public class Map extends AnchorPane{   
 
-    int cellWidth;
-    int cellHeight;
     ArrayList<City> cities = new ArrayList<City>();
-    int height;
-    int width;
-    int gridColumns;
-    int gridRows;
-    int[][] grid;
-    GraphicsContext gc;
+
+    public void setCities(ArrayList<City> cities) {
+        this.cities = cities;
+    }
+
+    public ArrayList<City> getCities() {
+        return cities;
+    }
     
-            // images
-        Image map1Image = new Image("file:images/gameplay_AC14.jpg");
-        Image map2Image = new Image("file:images/gameplay_AC58.jpg");
-        Image map3Image = new Image("file:images/gameplay_DF14.jpg");
-        Image map4Image = new Image("file:images/gameplay_DF58.jpg");
-        Image view = new Image("file:images/die_1.jpg");
     
-    Map(int[][] x, int type){
-            this.setWidth(1000);
-            this.setHeight(650);
-            gc = this.getGraphicsContext2D();
+    Map(int type){
+            this.setWidth(800);
+            this.setHeight(600);
            if(type == 1) 
-           {gc.drawImage(map1Image, 0, 0, 1000, 600);
-           gc.drawImage(view,  1093*1000/1000, 1932*600/2000);
+               setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+           if(type == 2) 
+               setStyle("-fx-background-image: url('" + "file:images/gameplay_AC58resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+           if(type == 3) 
+               setStyle("-fx-background-image: url('" + "file:images/gameplay_DF14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+           if(type == 4) 
+               setStyle("-fx-background-image: url('" + "file:images/gameplay_DF58resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+    }
+  }
+        //   {gc.drawImage(map1Image, 0, 0, 1000, 600);
+        //   gc.drawImage(view,  1093*1000/1000, 1932*600/2000);
            // cities.add(new City("ABERDEEN", 1093*1000/2000, 1093*1000/2000));
           //  cities.get(0).setTooltip(new Tooltip());
 //Circle circle = new Circle(cities.get(0).getWidth() / 2);
 //cities.get(0).setShape(circle);
-           }
-           if(type == 2)
-               gc.drawImage(map2Image, 0, 0, 1000, 600);
-           if(type == 3)
-               gc.drawImage(map3Image, 0, 0, 1000, 600);
-           if(type ==4)
-               gc.drawImage(map4Image, 0, 0, 1000, 600);
-            gridColumns = 200;
-            gridRows = 40;
-             grid = x;
-        }
+         //  }
+         //  if(type == 2)
+         //      gc.drawImage(map2Image, 0, 0, 1000, 600);
+         //  if(type == 3)
+          //     gc.drawImage(map3Image, 0, 0, 1000, 600);
+          // if(type ==4)
+           //    gc.drawImage(map4Image, 0, 0, 1000, 600);
+          //  gridColumns = 200;
+           // gridRows = 40;
+           //  grid = x;
+        //}
 
       /*  public void repaint() {
             gc = this.getGraphicsContext2D();
@@ -389,4 +388,4 @@ public class Map extends Canvas{
                 }
             } 
         } */
-    }
+   // }
