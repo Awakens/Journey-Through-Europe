@@ -6,14 +6,15 @@
 package ui;
 
 import java.util.ArrayList;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author Antony Kwok
  */
-public class Player {
+public class Player extends ImageView{
     ArrayList<Card> cards;
     City homeCity;
     ArrayList<String> history;
@@ -22,7 +23,11 @@ public class Player {
     City prevPrevCity;
     String name;
     boolean isUser;
-    int flag;
+    int num;
+    
+    public void addCard(Card c)
+    {  cards.add(c);
+    }       
 
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
@@ -57,7 +62,7 @@ public class Player {
     }
 
     public void setFlag(int flag) {
-        this.flag = flag;
+        this.num=num;
     }
 
     public ArrayList<Card> getCards() {
@@ -88,24 +93,38 @@ public class Player {
         return name;
     }
 
-    public boolean isIsUser() {
+    public boolean getIsUser() {
         return isUser;
     }
 
-    public int getFlag() {
-        return flag;
+    public int getNum() {
+        return num;
     }
     
-    Player(TextField p, int theFlag, String s)
+    Player(TextField p, int num, String s)
     { name = p.getText();
-     flag = theFlag;
+     this.num = num;
      if(s.equals("User"))
          isUser = true;
      if(s.equals("Computer"))
          isUser = false;
    cards = new ArrayList<Card>();
+   setScaleX(.3);
+   setScaleY(.3);
     
     history = new ArrayList<String>();
+              if(num == 0)
+             setImage(new Image("file:images/piece_black.png"));
+              if(num == 1)
+             setImage(new Image("file:images/piece_blue.png"));
+              if(num == 2)
+             setImage(new Image("file:images/piece_green.png"));
+              if(num == 3)
+             setImage(new Image("file:images/piece_red.png"));
+              if(num == 4)
+             setImage(new Image("file:images/piece_white.png"));
+              if(num == 5)
+             setImage(new Image("file:images/piece_yellow.png"));
     /*
     City homeCity;
     City myCity;

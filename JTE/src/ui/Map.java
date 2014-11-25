@@ -31,12 +31,14 @@ public class Map extends AnchorPane{
     Map(int type){
             this.setWidth(800);
             this.setHeight(600);
+            this.setMinHeight(800);
+            this.setMinWidth(600);
            if(type == 1) 
                setStyle("-fx-background-image: url('" + "file:images/gameplay_AC14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
            if(type == 2) 
-               setStyle("-fx-background-image: url('" + "file:images/gameplay_AC58resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
-           if(type == 3) 
                setStyle("-fx-background-image: url('" + "file:images/gameplay_DF14resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
+           if(type == 3) 
+               setStyle("-fx-background-image: url('" + "file:images/gameplay_AC58resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
            if(type == 4) 
                setStyle("-fx-background-image: url('" + "file:images/gameplay_DF58resized.jpg" + "'); -fx-max-width: 800; -fx-max-height: 600;");
     }

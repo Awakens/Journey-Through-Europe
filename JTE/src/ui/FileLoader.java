@@ -6,6 +6,7 @@
 package ui;
 import java.io.*;
 import java.util.ArrayList;
+import javafx.scene.image.ImageView;
 /**
  *
  * @author Antony Kwok
@@ -20,39 +21,64 @@ public class FileLoader {
     ArrayList<City> cities3= new ArrayList<City>();
     ArrayList<City> cities4= new ArrayList<City>();
 
-    
+     
     ArrayList<Card> greenCards = new ArrayList<Card>();
     ArrayList<Card> redCards = new ArrayList<Card>();
     ArrayList<Card> yellowCards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<Card>();
+
     
 void loadFile() throws Exception {
 
 BufferedReader file = 
 new BufferedReader(new FileReader("cities.csv"));
-
+System.out.println("Loaded file");
+City NY;
+int airportRegion = 0;
+int num = 0;
+Card card;
 String readLine = file.readLine(); 
 while (readLine != null)
-{
+{ 
   String[] data = readLine.split(",");
-
+  String[] land = null;
+  if(!(data[5].equals("null")))
+    land = data[5].split(" ");   //get land neighbors
+  else
+    land = new String[]{data[6]};  
+  String[] sea = null;
+   if(!(data[6].equals("null")))
+  sea = data[6].split(" ");
+   else
+    sea = new String[]{data[6]};   
+       
+  airportRegion = Integer.parseInt(data[7]);
+  num = Integer.parseInt(data[8]);
+  
     int region = Integer.parseInt(data[2]); //add in neighbors after
-      System.out.println(data[0] + "  " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
+   //   System.out.println(data[0] + "  " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
     int x = Integer.parseInt(data[3]);
     int y = Integer.parseInt(data[4]);
+  card = new Card(data[0], data[1], region, num);
+    cards.add(card);
+
+  card.setGraphic(new ImageView("file:images/" + data[1] + "/" + data[0] + ".jpg"));
+
+  NY = new City(data[0], data[1], region, x, y, land, sea, airportRegion, num);  
   if(data[1].equals("green"))
-    greenCards.add(new Card(data[0], data[1]));
+    greenCards.add(card);
   if(data[1].equals("red"))
-    redCards.add(new Card(data[0], data[1]));
+    redCards.add(card);
   if(data[1].equals("yellow"))
-    yellowCards.add(new Card(data[0], data[1]));
+    yellowCards.add(card);
   if(region == 1)
-    cities1.add(new City(data[0], data[1], region, x, y));
+    cities1.add(NY);
   if(region == 2)
-    cities2.add(new City(data[0], data[1], region, x, y));
+    cities2.add(NY);
   if(region == 3)
-    cities3.add(new City(data[0], data[1], region, x, y));
+    cities3.add(NY);
   if(region == 4)
-    cities4.add(new City(data[0], data[1], region, x, y));
+    cities4.add(NY);
     //next line
   readLine = file.readLine(); 
 }
@@ -61,7 +87,9 @@ while (readLine != null)
 
 
 } 
-
+  public ArrayList<Card> getCards() {
+        return cards;
+    }
  public  ArrayList<City> getCities1() {
         return cities1;
     }

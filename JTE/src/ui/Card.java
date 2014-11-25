@@ -25,10 +25,13 @@ public class Card extends Button{
     int region;
     City city;
     String name;
+    int num;
     
-    Card(String name, String color)
+    Card(String name, String color, int region, int num)
     {this.name = name;
     this.color = color;
+    this.region = region;
+    this.num = num;
    // this.special = special;
     }
     public void setColor(String color) {
@@ -101,6 +104,9 @@ public class Card extends Button{
 
     public int getNumber() {
         return number;
+    }
+     public String getName() {
+        return name;
     }
 
     public int getRegion() {

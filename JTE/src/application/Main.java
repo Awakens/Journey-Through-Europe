@@ -21,7 +21,7 @@ public class Main extends Application{
         primaryStage.setTitle("Journey Through Europe");
 try{
             JTEUI root = new JTEUI(primaryStage);
-            root.startUI();
+            root.run();
             Scene scene = new Scene(root.getMainPane(), root.getPaneWidth(), root.getPaneHeight());
             primaryStage.setScene(scene);
             
